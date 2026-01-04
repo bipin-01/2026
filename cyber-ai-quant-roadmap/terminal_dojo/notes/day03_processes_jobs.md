@@ -24,3 +24,37 @@ ps -eo pid,ppid,user,%cpu,%mem,stat,etime,cmd --sort=-%cpu | head -n 15
 top
 htop
 ```
+
+## Stuff Practiced
+### Jobs
+```bash
+sleep 120 &
+jobs -l
+fg %1
+sleep 120
+# Ctrl+Z
+bg
+jobs -l
+```
+
+### Signals
+```bash
+sleep 9999 &
+jobs -l
+kill -TERM <PID>
+kill -KILL <PID>         # only if stuck
+pkill -f "sleep 9999"    # careful: matches patterns
+```
+
+### Priority
+```bash
+nice -n 10 <cmd>
+sudo renice -n 15 -p <PID>
+```
+
+### Persist after logout
+```bash
+nohup <cmd> > out.log 2>&1 &
+tail -f out.log
+```
+
