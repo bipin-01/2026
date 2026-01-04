@@ -58,3 +58,9 @@ nohup <cmd> > out.log 2>&1 &
 tail -f out.log
 ```
 
+### Notes / gotchas
+- Prefer `kill -TERM` first, use `-KILL` last resort
+- `jobs` is per-terminal; `ps` shows system processes
+- `pkill -f` can kill more than we expect--verify with `pgrep -af <pattern>` first
+
+
