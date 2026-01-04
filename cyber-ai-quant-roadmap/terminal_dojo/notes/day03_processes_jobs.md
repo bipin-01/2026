@@ -63,4 +63,71 @@ tail -f out.log
 - `jobs` is per-terminal; `ps` shows system processes
 - `pkill -f` can kill more than we expect--verify with `pgrep -af <pattern>` first
 
+### Process inspection
+```bash
+ps aux | head -n 15
+ps -eo pid,ppid, user,%cpu,%mem,stat
+```
+
+## PRACTICE SESSION COMMANDS
+```bash
+sudo apt update && sudo apt install -y htop
+htop
+```
+
+### Jobs: bg / fg / Ctrl+Z
+```bash 
+sleep 120 &
+jobs -l
+fg %1
+```
+
+### Now start again and stop it:
+```bash
+sleep 300
+# press Ctrl+Z
+bg
+jobs -l
+```
+
+### Signals: kill/pkill safely
+```bash
+sleep 9999 &
+jobs -l
+```
+
+### Graceful
+```bash
+kill -TERM <PID>
+
+** force (only if need): 
+kill -KILL <PID> 
+```
+
+### Safe pattern kill workflow
+```bash
+pgrep -af "sleep 9999"
+pkill -f "sleep 9999"
+```
+
+### nice / renice (safe CPU hog demo)
+```bash
+bash -c 'while :; do :; done' &
+HOGPID=$!
+echo "hog pid=$HOGPID"
+ps -p "$HOGPID" -o pid,ni,cmd
+
+** lower its priority
+sudo renice -n 15 -p "$HOGPID"
+ps -p "$HOGPID" -o pid,ni,cmd
+
+** stop it
+kill -TERM "$HOGPID"
+
+** nohup demo
+nohup bash -c 'for i in {1..10}; do echo "tick $i"; sleep 1; done' > terminal_dojo/labs/day03_processes_jobs/nohup.out 2>&1 &
+tail -f terminal_dojo/labs/day03_processes_jobs/nohup.out
+
+```
+
 
