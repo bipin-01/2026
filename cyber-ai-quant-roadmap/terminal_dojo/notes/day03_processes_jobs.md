@@ -127,7 +127,6 @@ kill -TERM "$HOGPID"
 ** nohup demo
 nohup bash -c 'for i in {1..10}; do echo "tick $i"; sleep 1; done' > terminal_dojo/labs/day03_processes_jobs/nohup.out 2>&1 &
 tail -f terminal_dojo/labs/day03_processes_jobs/nohup.out
-
 ```
 
 
